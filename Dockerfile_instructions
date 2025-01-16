@@ -1,0 +1,59 @@
+simple build and run
+
+ docker image build --tag st4_back_scrape24 .  (note the dot indicates to build Dockerfile in current folder)
+ 
+ docker container run -v //c/stg4/back/scrape24/st4_back_scrape24/data:/home/data st4_back_scrape24
+ 
+
+
+Put it in docker compose and create a volume:
+#
+services:
+  
+  scraper:
+    image: st4_back_scrape24:latest
+    container_name: any_container_name
+    networks:
+      - some_name
+    volumes:
+      - st4_data:/home/data
+
+networks:
+  some_name:
+    external:
+        name: st4_net
+        
+volumes:
+  st4_data:
+#
+
+
+Put in on the registry
+#
+docker login --username cfurl
+docker image tag st4_back_scrape24 cfurl/st4_back_scrape24:v1
+docker image push cfurl/st4_back_scrape24:v1
+#
+
+Update the .yml to pull the image off of dockerhub
+#
+services:
+  
+  scraper:
+    image: cfurl/st4_back_scrape24:v1
+    container_name: scrape24
+    networks:
+      - some_name
+    volumes:
+      - st4_data:/home/data
+
+networks:
+  some_name:
+    external:
+        name: st4_net
+        
+volumes:
+  st4_data:
+#
+
+

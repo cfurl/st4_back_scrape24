@@ -1,0 +1,17 @@
+services:
+  
+  scraper:
+    image: cfurl/st4_back_scrape24:v1
+    container_name: scrape24
+    networks:
+      - some_name
+    volumes:
+      - st4_data:/home/data
+
+networks:
+  some_name:
+    external:
+        name: st4_net
+        
+volumes:
+  st4_data:
